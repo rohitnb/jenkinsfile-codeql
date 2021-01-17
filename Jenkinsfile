@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('CodeQL Scan') {
       environment {
-        GITHUB_CREDS = credentials('<JENKINS_CREDENTIAL_ID>') 
+        GITHUB_CREDS = credentials('<JENKINS_CREDENTIAL_ID>') //<-- Update the Credential ID here
       }
       steps {
         sh '''
