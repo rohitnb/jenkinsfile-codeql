@@ -30,6 +30,7 @@ fi
 $CODEQL_RUNNER_PATH init --repository $GITHUB_ORG/$GITHUB_REPO --github-url https://$GITHUB_HOST --github-auth $GITHUB_CREDS_PSW --codeql-path $CODEQL_PATH
 
 #2. BUILD
+#This script is used to "listen" to the build process
 chmod +x $WORKSPACE/codeql-runner/codeql-env.sh
 . $WORKSPACE/codeql-runner/codeql-env.sh
 mvn compile;
