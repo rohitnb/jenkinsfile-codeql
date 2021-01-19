@@ -22,18 +22,17 @@ then
 else
       GIT_REF="refs/pull/$CHANGE_ID/merge"
       GIT_COMMIT=`curl -s --location --request GET "https://$GITHUB_HOST/api/v3/repos/$GITHUB_ORG/$GITHUB_REPO/pulls/$CHANGE_ID" --header 'Accept: application/vnd.github.v3+json' --header "Authorization: token $GITHUB_CREDS_PSW" | jq '.merge_commit_sha' | sed -e 's/\"//g'`
-      echo "GIT_COMMIT is $GIT_COMMIT"
 fi
 
 #CODEQL SCAN
 #1. INIT
 $CODEQL_RUNNER_PATH init --repository $GITHUB_ORG/$GITHUB_REPO --github-url https://$GITHUB_HOST --github-auth $GITHUB_CREDS_PSW --codeql-path $CODEQL_PATH
+chmod +x $WORKSPACE/codeql-runner/codeql-env.sh #This script is used to "listen" to the build process
+. $WORKSPACE/codeql-runner/codeql-env.sh
 
 #2. BUILD
-#This script is used to "listen" to the build process
-chmod +x $WORKSPACE/codeql-runner/codeql-env.sh
-. $WORKSPACE/codeql-runner/codeql-env.sh
-mvn compile;
+#$CODEQL_RUNNER_PATH autobuild
+mvn clean install;
 
 #3. ANALYZE
 $CODEQL_RUNNER_PATH analyze --repository $GITHUB_ORG/$GITHUB_REPO --github-url https://$GITHUB_HOST --github-auth $GITHUB_CREDS_PSW --commit $GIT_COMMIT --ref $GIT_REF'''
