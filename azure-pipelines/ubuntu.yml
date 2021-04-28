@@ -1,4 +1,4 @@
-name: Code Scanning on Azure Pipelines
+name: Code Scanning on Azure Pipelines (Ubuntu)
 
 trigger:
 - master
