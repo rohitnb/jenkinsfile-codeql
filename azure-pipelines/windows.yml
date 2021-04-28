@@ -1,3 +1,5 @@
+name: Code Scanning on Azure Pipelines (Windows)
+
 trigger:
 - main
 
