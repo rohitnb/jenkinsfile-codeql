@@ -24,13 +24,16 @@ steps:
         $StatusCode = $_.Exception.Response.StatusCode.value__
         Write-Output "Download Failed"
     }
-  displayName: 'Download CodeQL Runner and Binary'
+  displayName: 'CodeQL: Download'
 
 - powershell: |
     $GITHUB_HOST="https://"+"$(Build.Repository.Uri)".split("/")[2]
     $codeql_runner_output_file = "$PSScriptRoot\codeql-runner-win.exe"
+    
     & $codeql_runner_output_file init --repository $(Build.Repository.Name) --github-url $GITHUB_HOST --github-auth $(GITHUB_PAT)
+    
     # . codeql-runner/codeql-env.sh
     # <BUILD STEPS GO HERE>
+    
     & $codeql_runner_output_file analyze --repository $(Build.Repository.Name) --github-url $GITHUB_HOST --github-auth $(GITHUB_PAT) --commit $(Build.SourceVersion) --ref $(Build.SourceBranch)
-  displayName: 'CodeQL Scan'
+  displayName: 'CodeQL: Initialise, Build, & Scan'
