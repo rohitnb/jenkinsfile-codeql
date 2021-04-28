@@ -1,6 +1,7 @@
 ## Running Code Scanning on Azure Pipelines:
 
 Operating Systems - [Ubuntu](https://github.com/rohitnb/codescanning-sample-ci-scripts/blob/main/azure-pipelines-code-scanning-ubuntu.yml) and [Windows](https://github.com/rohitnb/codescanning-sample-ci-scripts/blob/main/azure-pipelines-code-scanning-windows.yml)
+
 Prerequisites - [GitHub Repo integrated with Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml)
 
 ### Procedure:
