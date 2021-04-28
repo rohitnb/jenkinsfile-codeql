@@ -15,7 +15,7 @@ steps:
    wget https://github.com/github/codeql-action/releases/download/codeql-bundle-20210319/codeql-runner-linux
    mv codeql-runner-linux ../
    chmod +x ../codeql-runner-linux
-  displayName: 'Get latest CodeQL package. Install on Agent.'
+  displayName: 'CodeQL: Download'
 
 - script: |
    GITHUB_HOST="https://`echo $(Build.Repository.Uri) | cut -d'/' -f3`"
@@ -25,15 +25,16 @@ steps:
     --github-url $GITHUB_HOST \
     --github-auth $(GITHUB_PAT) \
     --temp-dir ../codeql-runner
-  displayName: 'Initialize CodeQL Executable and create a CodeQL database'  
+  displayName: 'CodeQL: Initialise'  
 
 - script: |
    GITHUB_HOST="https://`echo $(Build.Repository.Uri) | cut -d'/' -f3`" 
-   #echo "======================Exporting Envt variables======================"
+   
+   # ===BUILD PROJECT====
    #. ../codeql-runner/codeql-runner/codeql-env.sh
-   #echo "======================Building the Project======================"
    #../codeql-runner-linux autobuild --temp-dir ../codeql-runner
-   # Run your custom build commands instead if autobuild fails
+   # ====HINT: Run your custom build commands instead if autobuild fails
+   
    echo "======================Run CodeQL Analyze======================" 
    ../codeql-runner-linux analyze \
       --repository $(Build.Repository.Name) \
@@ -42,4 +43,4 @@ steps:
       --commit $(Build.SourceVersion) \
       --ref $(Build.SourceBranch) \
       --temp-dir ../codeql-runner
-  displayName: 'Build and Analyze'
+  displayName: 'CodeQL: Build and Analyze'
